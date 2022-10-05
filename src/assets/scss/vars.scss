@@ -1,0 +1,27 @@
+@mixin flexCenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin text($size, $weight, $color, $line:1){
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  line-height: $line;
+}
+
+
+$blue: rgb(19, 73, 211);
+$red: rgb(249, 75, 66);
+$bg: rgb(66, 239, 66);
+$gray: rgb(144, 147, 144);
+
+*{
+  list-style: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  box-sizing: border-box;
+}
