@@ -117,7 +117,6 @@ export default {
       .form {
         display: flex;
         flex-wrap: wrap;
-        background-color: rgb(182, 117, 117);
         &-name {
           background: inherit;
           border: none;
