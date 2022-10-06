@@ -1,5 +1,6 @@
 <template>
   <div class="container-item">
+    <p>{{myArray}}</p>
     <h3 class="title">List {{ index }}</h3>
     <draggable
       v-model="myArray"
@@ -13,7 +14,6 @@
         type: 'transition-group',
         name: !drag ? 'list' : null,
       }"
-      tag="transition-group"
     >
       <template #item="{ element }">
         <Item :el="element" />
