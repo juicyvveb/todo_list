@@ -1,6 +1,5 @@
 <template>
   <div class="container-item">
-    <p>{{ myArray }}</p>
     <h3 class="title">List {{ index }}</h3>
     <draggable
       v-model="myArray"
@@ -22,9 +21,12 @@
             <input
               type="text"
               v-model="element.name"
-              :class="{ 'list-item--name': true }"
+              :class="{ 'form-name': true }"
+              :id="element.id"
             />
           </form>
+          <!-- <p v-if="!edition" @click="edition=true">{{ element.name }}</p>
+          <button class="label" @click="edition=true">edit</button> -->
         </div>
       </template>
 
@@ -44,6 +46,7 @@ export default {
   props: ["items", "index"],
   data() {
     return {
+      edition: false,
     };
   },
   components: {
@@ -80,6 +83,11 @@ export default {
           let arr = this.myArray,
             i = this.index;
           this.change({ arr, i });
+          const input = e.target.querySelector("input");
+          if (input) {
+            input.blur();
+          }
+          this.edition = false;
         },
         () => {
           this.delItem(el);
@@ -101,27 +109,38 @@ export default {
   width: 45%;
   .list {
     &-item {
-      padding: 5% 3% 5% 0;
+      padding: 5% 3% 5% 3%;
       border: 1px solid black;
       margin-bottom: 5%;
       background: rgb(88, 226, 196);
-      &--name {
-        background: inherit;
-        border: none;
-        outline: none;
-        font-size: 20px;
-        max-width: 100%;
-        width: fit-content;
-        cursor: pointer;
-        &:focus {
-          font-size: 22px;
+      &--form,
+      .form {
+        display: flex;
+        flex-wrap: wrap;
+        background-color: rgb(182, 117, 117);
+        &-name {
+          background: inherit;
+          border: none;
+          outline: none;
+          font-size: 20px;
+          max-width: 90%;
+          width: fit-content;
+          cursor: pointer;
+          word-break: break-all;
+          &:focus {
+            font-size: 22px;
+          }
+        }
+        .label {
+          width: 3vw;
+          height: 3vw;
+          border: 1px solid black;
+          border-radius: 4px;
         }
       }
     }
   }
 }
-
-
 
 .fade-enter-from,
 .fade-leave-to {

@@ -1,15 +1,14 @@
 <template>
   <header class="wrapper"></header>
   <main class="wrapper">
-    <div class="container">
+    <!-- <div class="container"> -->
+    <TransitionGroup tag="ul" class="container" name="list">
       <List v-for="(elem, i) in list" :key="i" :items="elem" :index="i" />
-    </div>
+    </TransitionGroup>
+    <!-- </div> -->
     <Button />
   </main>
-  <footer>
-    {{value}}
-    <button @click="toLocal()">change value</button>
-  </footer>
+  <footer></footer>
 </template>
 
 <script>
@@ -26,16 +25,15 @@ export default {
     list() {
       return this.$store.getters.list;
     },
-    value(){
+    value() {
       return this.$store.getters.value;
-    }
+    },
   },
   methods: {
-    toLocal(){
-      this.$store.dispatch('saveToLs') 
-      
-    }
-  }
+    toLocal() {
+      this.$store.dispatch("saveToLs");
+    },
+  },
 };
 </script>
 
@@ -55,10 +53,24 @@ main {
   text-align: center;
   .container {
     @include flexCenter;
-    align-items: flex-start;
+    align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
   }
+}
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5 ease-in-out;
+}
+
+.list-enter-from,
+.list-leave-to {
+  transform: scale(0.7) translateY(-40%);
+}
+
+.list-leave-active {
+  position: absolute;
 }
 </style>
 
