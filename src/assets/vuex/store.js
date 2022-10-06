@@ -20,7 +20,7 @@ const store = createStore({
         .map(el => el.tasks)
         .map((el, k) => el.map((el, i) => {
           return {
-            name: el.trim(),
+            name: el.name ? el.name.trim() : el.trim(),
             id: `${k}_${i}`,
           }
         }))
