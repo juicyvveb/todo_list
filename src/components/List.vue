@@ -1,35 +1,22 @@
 <template>
   <div class="container-item">
-    <p>{{ myArray }}</p>
     <h3 class="title">List {{ index }}</h3>
     <draggable
       v-model="myArray"
-      group="people"
       @start="drag = true"
       @end="drag = false"
       item-key="id"
+      group="people"
       class="list-group"
+      :component-data="{
+        tag: 'ul',
+        type: 'transition-group',
+        name: !drag ? 'list' : null,
+      }"
+      tag="transition-group"
     >
       <template #item="{ element }">
-        <div class="list-item" :key="element">
-          <button @click="delItem(element)">del</button>
-          <form
-            class="list-item--form form"
-            action="#"
-            @change.prevent="editName($event, element)"
-            @submit.prevent="editName($event, element)"
-          >
-            <input
-              type="text"
-              v-model="element.name"
-              :class="{ 'list-item--name': true }"
-            />
-          </form>
-        </div>
-      </template>
-
-      <template #footer>
-        <button @click="addItem()">Add</button>
+        <Item :el="element" />
       </template>
     </draggable>
   </div>
@@ -37,17 +24,20 @@
 
 <script>
 import validate from "../assets/js/validate";
+import Item from "./Item.vue";
 import draggable from "vuedraggable";
 import { mapActions } from "vuex";
 
 export default {
-  props: ["items", "index"],
+  props: ["index"],
   data() {
     return {
+      drag: false,
     };
   },
   components: {
     draggable,
+    Item,
   },
   computed: {
     myArray: {
@@ -121,8 +111,6 @@ export default {
   }
 }
 
-
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0.5;
@@ -132,5 +120,23 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
   transition: all 5s ease-in-out;
+}
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
 }
 </style>

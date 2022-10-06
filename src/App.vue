@@ -7,8 +7,6 @@
     <Button />
   </main>
   <footer>
-    {{value}}
-    <button @click="toLocal()">change value</button>
   </footer>
 </template>
 
@@ -26,16 +24,7 @@ export default {
     list() {
       return this.$store.getters.list;
     },
-    value(){
-      return this.$store.getters.value;
-    }
   },
-  methods: {
-    toLocal(){
-      this.$store.dispatch('saveToLs') 
-      
-    }
-  }
 };
 </script>
 
