@@ -22,6 +22,7 @@ const store = createStore({
           return {
             name: el.name ? el.name.trim() : el.trim(),
             id: `${k}_${i}`,
+            done: el.done || false
           }
         }))
     },
@@ -50,12 +51,10 @@ const store = createStore({
     },
   },
   actions: {
-    change({commit}, {arr,i}) {
-      arr = arr.map(el => el.name);
-      commit('updateList', {
-        arr,
-        i
-      });
+    change({ commit}, {arr,i }) {
+      console.log(arr)
+      arr = arr.map(el => {return {name: el.name, done: el.done}});
+      commit('updateList', { arr, i});
     },
     add({
       commit
