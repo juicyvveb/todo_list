@@ -1,6 +1,5 @@
 <template>
   <div class="container-item">
-    <p>{{myArray}}</p>
     <h3 class="title">List {{ index }}</h3>
     <draggable
       v-model="myArray"
@@ -16,7 +15,16 @@
       }"
     >
       <template #item="{ element }">
-        <Item :el="element" />
+        <Item
+          :index="myArray.indexOf(element)"
+          :el="element"
+          @edit="editName"
+          @del="delItem"
+        />
+      </template>
+
+      <template #footer>
+        <button @click="addItem()">add</button>
       </template>
     </draggable>
   </div>
@@ -27,6 +35,7 @@ import validate from "../assets/js/validate";
 import Item from "./Item.vue";
 import draggable from "vuedraggable";
 import { mapActions } from "vuex";
+// import ButtonAdd from './ButtonAdd.vue';
 
 export default {
   props: ["index"],
@@ -38,6 +47,7 @@ export default {
   components: {
     draggable,
     Item,
+    // ButtonAdd,
   },
   computed: {
     myArray: {
@@ -76,6 +86,11 @@ export default {
         }
       );
     },
+    compliting(done, i) {
+      done, i
+      this.myArray[i].done = done;
+      this.change({ arr: this.myArray, i: this.index });
+    },
   },
 };
 </script>
@@ -90,24 +105,6 @@ export default {
   margin-bottom: 5%;
   width: 45%;
   .list {
-    &-item {
-      padding: 5% 3% 5% 0;
-      border: 1px solid black;
-      margin-bottom: 5%;
-      background: rgb(88, 226, 196);
-      &--name {
-        background: inherit;
-        border: none;
-        outline: none;
-        font-size: 20px;
-        max-width: 100%;
-        width: fit-content;
-        cursor: pointer;
-        &:focus {
-          font-size: 22px;
-        }
-      }
-    }
   }
 }
 

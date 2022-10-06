@@ -24,8 +24,9 @@ const store = createStore({
         .map(el => el.tasks)
         .map((el, k) => el.map((el, i) => {
           return {
-            name: el,
+            name: el.name || el,
             id: `${k}_${i}`,
+            done: el.done || false
           }
         }))
     },
@@ -52,23 +53,12 @@ const store = createStore({
       state.list[i].tasks.push(val);
       localStorage.setItem('list', JSON.stringify(state.list));
     },
-    changeValue(state) {
-      state.value += '__add__';
-      localStorage.setItem('value', JSON.stringify(state.value));
-    }
   },
   actions: {
-    change({
-      commit
-    }, {
-      arr,
-      i
-    }) {
-      arr = arr.map(el => el.name);
-      commit('updateList', {
-        arr,
-        i
-      });
+    change({ commit}, {arr,i }) {
+      console.log(arr)
+      arr = arr.map(el => {return {name: el.name, done: el.done}});
+      commit('updateList', { arr, i});
     },
     add({
       commit
