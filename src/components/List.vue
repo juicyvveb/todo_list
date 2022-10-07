@@ -15,7 +15,6 @@
       }"
     >
       <template #item="{ element }">
-
         <Item
           :index="myArray.indexOf(element)"
           :el="element"
@@ -46,7 +45,6 @@ export default {
   components: {
     draggable,
     Item,
-    // ButtonAdd,
   },
   computed: {
     myArray: {
@@ -108,8 +106,8 @@ export default {
   padding: 3%;
   margin-bottom: 5%;
   width: 45%;
-  .list {
-
+  .list-group {
+    height: 100%;
   }
 }
 

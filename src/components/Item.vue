@@ -1,7 +1,6 @@
 <template>
   <div :class="{ 'list-item': true, 'done': element.done }" :key="element">
     <button @click="delItem(element)" class="btn btn-danger">del</button>
-    <!-- <button class="btn btn-success" @click="complete()">done</button> -->
     <form
       class="list-item--form form"
       action="#"
