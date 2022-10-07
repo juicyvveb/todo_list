@@ -3,13 +3,19 @@
     <h3 class="title">List {{ index }}</h3>
     <draggable
       v-model="myArray"
-      group="people"
       @start="drag = true"
       @end="drag = false"
       item-key="id"
+      group="people"
       class="list-group"
+      :component-data="{
+        tag: 'ul',
+        type: 'transition-group',
+        name: !drag ? 'list' : null,
+      }"
     >
       <template #item="{ element }">
+<<<<<<< HEAD
         <div class="list-item" :key="element">
           <button @click="delItem(element)">del</button>
           <form
@@ -28,10 +34,18 @@
           <!-- <p v-if="!edition" @click="edition=true">{{ element.name }}</p>
           <button class="label" @click="edition=true">edit</button> -->
         </div>
+=======
+        <Item
+          :index="myArray.indexOf(element)"
+          :el="element"
+          @edit="editName"
+          @del="delItem"
+        />
+>>>>>>> withItem
       </template>
 
       <template #footer>
-        <button @click="addItem()">Add</button>
+        <button @click="addItem()">add</button>
       </template>
     </draggable>
   </div>
@@ -39,18 +53,26 @@
 
 <script>
 import validate from "../assets/js/validate";
+import Item from "./Item.vue";
 import draggable from "vuedraggable";
 import { mapActions } from "vuex";
+// import ButtonAdd from './ButtonAdd.vue';
 
 export default {
-  props: ["items", "index"],
+  props: ["index"],
   data() {
     return {
+<<<<<<< HEAD
       edition: false,
+=======
+      drag: false,
+>>>>>>> withItem
     };
   },
   components: {
     draggable,
+    Item,
+    // ButtonAdd,
   },
   computed: {
     myArray: {
@@ -94,6 +116,11 @@ export default {
         }
       );
     },
+    compliting(done, i) {
+      done, i
+      this.myArray[i].done = done;
+      this.change({ arr: this.myArray, i: this.index });
+    },
   },
 };
 </script>
@@ -108,6 +135,7 @@ export default {
   margin-bottom: 5%;
   width: 45%;
   .list {
+<<<<<<< HEAD
     &-item {
       padding: 5% 3% 5% 3%;
       border: 1px solid black;
@@ -138,6 +166,8 @@ export default {
         }
       }
     }
+=======
+>>>>>>> withItem
   }
 }
 
@@ -150,5 +180,23 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
   transition: all 5s ease-in-out;
+}
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
 }
 </style>
