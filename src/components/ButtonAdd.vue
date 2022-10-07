@@ -18,7 +18,7 @@ export default {
     ...mapActions(["change"]),
     addList(){
       const i = this.createdIndex;
-      this.change({arr: [{name: 'first task'}], i})
+      this.change({arr: {title:'title', tasks: [{name: "some name"}]}, i})
     }
   }
 }

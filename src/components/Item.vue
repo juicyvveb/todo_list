@@ -1,6 +1,8 @@
 <template>
   <div :class="{ 'list-item': true, 'done': element.done }" :key="element">
-    <button @click="delItem(element)" class="btn btn-danger">del</button>
+    <button @click="delItem(element)" class="list-item--button list-item--button__del">
+      <span></span>
+    </button>
     <form
       class="list-item--form form"
       action="#"
@@ -48,7 +50,7 @@ export default {
   padding: 5% 3% 5% 0;
   border: 1px solid black;
   margin-bottom: 5%;
-  background: rgba(255, 110, 43, 0.616);
+  background: rgba(245, 77, 77, 0.774);
   &--name {
     background: inherit;
     border: none;

@@ -1,22 +1,19 @@
 <template>
   <div class="container-item">
-    <h3 class="title">List {{ index }}</h3>
+    <form class="form container-item--title" action="#">
+      <input type="text" v-model="title" :class="{ 'list-item--name': true }" />
+    </form>
     <draggable
-      v-model="myArray"
+      v-model="tasks"
       @start="drag = true"
       @end="drag = false"
       item-key="id"
       group="people"
       class="list-group"
-      :component-data="{
-        tag: 'ul',
-        type: 'transition-group',
-        name: !drag ? 'list' : null,
-      }"
     >
       <template #item="{ element }">
         <Item
-          :index="myArray.indexOf(element)"
+          :index="tasks.indexOf(element)"
           :el="element"
           @edit="editName"
           @del="delItem"
@@ -35,12 +32,11 @@ import validate from "../assets/js/validate";
 import Item from "./Item.vue";
 import draggable from "vuedraggable";
 import { mapActions } from "vuex";
-// import ButtonAdd from './ButtonAdd.vue';
 
 export default {
   props: ["index"],
   data() {
-    return {}
+    return {};
   },
   components: {
     draggable,
@@ -56,6 +52,25 @@ export default {
         this.change({ arr, i });
       },
     },
+    tasks: {
+      get() {
+        return this.myArray.tasks;
+      },
+      set(arr) {
+        const i = this.index;
+        this.myArray.tasks = arr;
+        this.change({ arr: this.myArray, i });
+      },
+    },
+    title: {
+      get() {
+        return this.myArray.title || "my title";
+      },
+      set(val) {
+        this.myArray.title = val;
+        this.change({ arr: this.myArray, i: this.index });
+      },
+    },
   },
   methods: {
     ...mapActions(["change"]),
@@ -65,18 +80,17 @@ export default {
       this.$store.dispatch("add", { val, i });
     },
     delItem(el) {
-      let arr = this.myArray,
+      let arr = this.tasks,
         index = arr.indexOf(el),
         i = this.index;
       arr.splice(index, 1);
-      this.change({ arr, i });
+      this.change({ arr: this.myArray, i });
     },
     editName(e, el) {
       return validate(e, el.name).then(
         () => {
-          let arr = this.myArray,
-            i = this.index;
-          this.change({ arr, i });
+          let i = this.index;
+          this.change({ arr: this.myArray, i });
           const input = e.target.querySelector("input");
           if (input) {
             input.blur();
@@ -89,9 +103,9 @@ export default {
       );
     },
     compliting(done, i) {
-      done, i
-      this.myArray[i].done = done;
-      this.change({ arr: this.myArray, i: this.index });
+      done, i;
+      this.tasks.done = done;
+      this.change({ arr: this.tasks, i: this.index });
     },
   },
 };
@@ -106,6 +120,14 @@ export default {
   padding: 3%;
   margin-bottom: 5%;
   width: 45%;
+  &--title {
+    input {
+      background: 0;
+      border: none;
+      max-width: 100%;
+      outline: none;
+    }
+  }
   .list-group {
     height: 100%;
   }
