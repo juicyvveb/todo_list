@@ -102,6 +102,9 @@ export default {
   padding: 3%;
   margin-bottom: 5%;
   width: 45%;
+  .list-group {
+    height: 100%;
+  }
 }
 
 .fade-enter-from,

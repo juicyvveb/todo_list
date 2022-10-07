@@ -52,13 +52,10 @@ const store = createStore({
   },
   actions: {
     change({ commit}, {arr,i }) {
-      console.log(arr)
       arr = arr.map(el => {return {name: el.name, done: el.done}});
       commit('updateList', { arr, i});
     },
-    add({
-      commit
-    }, payload) {
+    add({commit}, payload) {
       commit('addItem', payload)
     },
   }

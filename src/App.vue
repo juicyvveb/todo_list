@@ -4,11 +4,9 @@
 
   <header class="wrapper"></header>
   <main class="wrapper">
-    <!-- <div class="container"> -->
     <TransitionGroup tag="ul" class="container" name="list">
       <List v-for="(elem, i) in list" :key="i" :items="elem" :index="i" />
     </TransitionGroup>
-    <!-- </div> -->
     <Button />
   </main>
   <footer></footer>
@@ -53,7 +51,7 @@ main {
     flex-wrap: wrap;
   }
 }
-.list-move,
+// .list-move,
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5 ease-in-out;
