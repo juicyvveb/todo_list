@@ -11,12 +11,7 @@
     <!-- </div> -->
     <Button />
   </main>
-<<<<<<< HEAD
   <footer></footer>
-=======
-  <footer>
-  </footer>
->>>>>>> withItem
 </template>
 
 <script>
@@ -33,19 +28,7 @@ export default {
     list() {
       return this.$store.getters.list;
     },
-<<<<<<< HEAD
-    value() {
-      return this.$store.getters.value;
-    },
   },
-  methods: {
-    toLocal() {
-      this.$store.dispatch("saveToLs");
-    },
-  },
-=======
-  },
->>>>>>> withItem
 };
 </script>
 

@@ -51,7 +51,6 @@ const store = createStore({
     },
   },
   actions: {
-
     change({ commit}, {arr,i }) {
       console.log(arr)
       arr = arr.map(el => {return {name: el.name, done: el.done}});
