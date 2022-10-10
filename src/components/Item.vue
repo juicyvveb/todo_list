@@ -1,43 +1,53 @@
 <template>
-  <div :class="{ 'list-item': true, 'done': element.done }" :key="element">
-    <button @click="delItem(element)" class="list-item--button list-item--button__del">
-      <span></span>
-    </button>
-    <form
-      class="list-item--form form"
-      action="#"
-      @change.prevent="editName($event, element)"
-      @submit.prevent="editName($event, element)"
-    >
-      <input
-        type="text"
-        v-model="element.name"
-        :class="{ 'list-item--name': true }"
-      />
-      <input
-        @input="element.done = !element.done"
-        type="checkbox"
-        v-model="element.done"
-      />
-    </form>
+  <div :class="{ 'list-item': true, done: element.done }" :key="element">
+    <Title :target="element.name" @changeName="changeName" @delete="delItem" />
+    <Button :classes="'inItem'" @delItem="delItem(element)" />
+    <Completed :target="element.done" @complete="complete" />
   </div>
 </template>
 
 <script>
+import Button from "./ButtonAdd.vue";
+import Title from "./TitleForm.vue";
+import Completed from "./CompleteForm.vue";
+
 export default {
-  data() {
-    return {};
-  },
   props: ["el", "index"],
+  data() {
+    return {
+      title: this.el.name || "no title",
+    };
+  },
+  components: {
+    Button,
+    Title,
+    Completed,
+  },
   computed: {
     element() {
       return this.el;
     },
+    name: {
+      get() {
+        console.log("get");
+        return this.title;
+      },
+      set(val) {
+        console.log("set");
+        this.title = val;
+      },
+    },
   },
   methods: {
-    editName(e, el) {
-      this.$emit("edit", e, el);
+    changeName(val) {
+      this.$emit("edit", { val, index: this.index });
     },
+    complete(val) {
+      this.$emit("complete", { val, index: this.index });
+    },
+    // editName(e, el) {
+    //   this.$emit("edit", e, el);
+    // },
     delItem(el) {
       this.$emit("del", el);
     },
@@ -51,6 +61,7 @@ export default {
   border: 1px solid black;
   margin-bottom: 5%;
   background: rgba(245, 77, 77, 0.774);
+  position: relative;
   &--name {
     background: inherit;
     border: none;

@@ -1,29 +1,72 @@
 <template>
-  <div class="container">
-    <div class="box">
-      <button type="button" @click="addList()">add list</button>
-    </div>
+  <div :class="['box', classes]">
+    <button type="button" class="btn btn__add" @click="initial()">
+      <span></span>
+    </button>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 export default {
-  computed: {
-    createdIndex(){
-      return this.$store.getters.list.length 
+  props: ['classes'],
+  methods: {
+    initial(){
+      this.$emit('addItem')
+      this.$emit('addList')
+      this.$emit('delItem')
     }
   },
-  methods:{
-    ...mapActions(["change"]),
-    addList(){
-      const i = this.createdIndex;
-      this.change({arr: {title:'title', tasks: [{name: "some name"}]}, i})
+};
+</script>
+
+<style lang="scss" scoped>
+@import '../assets/scss/main.scss';
+.box {
+  display: flex;
+  border-radius: 20%;
+  border: 1px solid black;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  .btn {
+    width: 100%;
+    border: none;
+    @include flexCenter;
+    span {
+      width: 70%;
+      height: 13%;
+      position: relative;
+      background: $green;
+      &:after{
+        content: '';
+        position: absolute;
+        top: 0; 
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotate(90deg);
+        background: inherit;
+      }
     }
   }
 }
-</script>
-
-<style>
-
+.box.main{
+  width: 5%;
+}
+.box.inList{
+  margin-top: 5%;
+  width: 10%;
+}
+.box.inItem{
+  margin-top: 5%;
+  width: 10%;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  .btn{
+    span {
+      transform: rotate(45deg);
+      background: $red;
+    }
+  }
+}
 </style>

@@ -6,10 +6,12 @@ const store = createStore({
   state() {
     return {
       list: JSON.parse(localStorage.getItem('list')) || [{
+          id: 'first',
           title: 'my title',
           tasks: ['to do smth', 'read smth', 'cook smth'],
         },
         {
+          id: 'second',
           title: '',
           tasks: ['learn smth', 'play smth', 'insane'],
         }
@@ -66,6 +68,10 @@ const store = createStore({
       state.list[i].tasks.push(val);
       localStorage.setItem('list', JSON.stringify(state.list));
     },
+    deleteList(state, i){
+      state.list.splice(i, 1);
+      localStorage.setItem('list', JSON.stringify(state.list));
+    }
   },
   actions: {
     change({ commit}, {arr, i}) {
@@ -75,6 +81,9 @@ const store = createStore({
     add({commit}, payload) {
       commit('addItem', payload)
     },
+    deleteList({commit}, index){
+      commit('deleteList', index)
+    }
   }
 })
 

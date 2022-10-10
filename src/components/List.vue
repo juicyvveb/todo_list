@@ -1,8 +1,7 @@
 <template>
   <div class="container-item">
-    <form class="form container-item--title" action="#">
-      <input type="text" v-model="title" :class="{ 'list-item--name': true }" />
-    </form>
+    <h3>{{index}}</h3>
+    <Title :target="title" @changeName="changeListTitle" @delete="deleteList"/>
     <draggable
       v-model="tasks"
       @start="drag = true"
@@ -16,22 +15,24 @@
           :index="tasks.indexOf(element)"
           :el="element"
           @edit="editName"
+          @complete="complete"
           @del="delItem"
         />
       </template>
 
       <template #footer>
-        <button @click="addItem()">add</button>
+        <Button :classes="'inList'" @addItem="addItem" />
       </template>
     </draggable>
   </div>
 </template>
 
 <script>
-import validate from "../assets/js/validate";
 import Item from "./Item.vue";
 import draggable from "vuedraggable";
 import { mapActions } from "vuex";
+import Button from "./ButtonAdd.vue";
+import Title from "./TitleForm.vue";
 
 export default {
   props: ["index"],
@@ -41,6 +42,8 @@ export default {
   components: {
     draggable,
     Item,
+    Button,
+    Title,
   },
   computed: {
     myArray: {
@@ -80,33 +83,24 @@ export default {
       this.$store.dispatch("add", { val, i });
     },
     delItem(el) {
-      let arr = this.tasks,
-        index = arr.indexOf(el),
-        i = this.index;
-      arr.splice(index, 1);
-      this.change({ arr: this.myArray, i });
+      this.tasks.splice(this.tasks.indexOf(el), 1);
+      this.tasks = [...this.tasks]
     },
-    editName(e, el) {
-      return validate(e, el.name).then(
-        () => {
-          let i = this.index;
-          this.change({ arr: this.myArray, i });
-          const input = e.target.querySelector("input");
-          if (input) {
-            input.blur();
-          }
-          this.edition = false;
-        },
-        () => {
-          this.delItem(el);
-        }
-      );
+    editName({ val, index }) {
+      this.tasks[index].name = val;
+      this.tasks = [...this.tasks];
     },
-    compliting(done, i) {
-      done, i;
-      this.tasks.done = done;
-      this.change({ arr: this.tasks, i: this.index });
+    complete({ val, index }) {
+      this.tasks[index].done = val;
+      this.tasks = [...this.tasks];
     },
+    changeListTitle(val){
+      this.title = val;
+    },
+    deleteList(){
+      console.log(this.index)
+      this.$store.dispatch('deleteList', this.index)
+    }
   },
 };
 </script>

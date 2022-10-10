@@ -1,13 +1,10 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-  <h3>{{list}}</h3>
-
-  <header class="wrapper"></header>
-  <main class="wrapper">
+  <main class="wrapper main">
+    <h1 class="title">Drag and Drop List</h1>
     <TransitionGroup tag="ul" class="container" name="list">
-      <List v-for="(elem, i) in list" :key="i" :items="elem" :index="i" />
+      <List v-for="(elem, i) in list" :key="elem.id" :items="elem" :index="i" />
     </TransitionGroup>
-    <Button/>
+    <Button :classes="'main'" @addList="addList"/>
   </main>
   <footer></footer>
 
@@ -16,8 +13,14 @@
 <script>
 import List from "./components/List.vue";
 import Button from "./components/ButtonAdd.vue";
+import { mapActions } from "vuex";
 
 export default {
+  data(){
+    return{
+      count: 1,
+    }
+  },
   name: "App",
   components: {
     List,
@@ -28,6 +31,15 @@ export default {
       return this.$store.getters.list;
     },
   },
+  methods: {
+    ...mapActions(["change"]),
+    addList() {
+      this.change({
+        arr: { title: "title", tasks: [{ name: "some name" }], id: `fd${++this.count}` },
+        i: this.list.length,
+      });
+    },
+  }
 };
 </script>
 

@@ -9,6 +9,9 @@ function validate(e, name){
       }, 500);
       rej('Скорее всего, вы ничего не ввели');
     }
+    // let result = name.toLower.case().trim();
+    // console.log(result)
+    // res(result)
     res()
   })
 }
