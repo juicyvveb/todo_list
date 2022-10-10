@@ -1,7 +1,7 @@
 <template>
   <div class="container-item">
-    <h3>{{index}}</h3>
-    <Title :target="title" @changeName="changeListTitle" @delete="deleteList"/>
+    <Title class="title" :target="title" @changeName="changeListTitle"/>
+    <Button :classes="'delete'" @click="deleteList()" />
     <draggable
       v-model="tasks"
       @start="drag = true"
@@ -21,7 +21,7 @@
       </template>
 
       <template #footer>
-        <Button :classes="'inList'" @addItem="addItem" />
+        <Button :classes="'inList'" @click="addItem()" />
       </template>
     </draggable>
   </div>
@@ -31,7 +31,7 @@
 import Item from "./Item.vue";
 import draggable from "vuedraggable";
 import { mapActions } from "vuex";
-import Button from "./ButtonAdd.vue";
+import Button from "./Button.vue";
 import Title from "./TitleForm.vue";
 
 export default {
@@ -50,10 +50,6 @@ export default {
       get() {
         return this.$store.getters.list[this.index];
       },
-      set(arr) {
-        const i = this.index;
-        this.change({ arr, i });
-      },
     },
     tasks: {
       get() {
@@ -67,7 +63,7 @@ export default {
     },
     title: {
       get() {
-        return this.myArray.title || "my title";
+        return this.myArray.title || "default title";
       },
       set(val) {
         this.myArray.title = val;
@@ -84,7 +80,7 @@ export default {
     },
     delItem(el) {
       this.tasks.splice(this.tasks.indexOf(el), 1);
-      this.tasks = [...this.tasks]
+      this.tasks = [...this.tasks];
     },
     editName({ val, index }) {
       this.tasks[index].name = val;
@@ -94,13 +90,12 @@ export default {
       this.tasks[index].done = val;
       this.tasks = [...this.tasks];
     },
-    changeListTitle(val){
+    changeListTitle(val) {
       this.title = val;
     },
-    deleteList(){
-      console.log(this.index)
-      this.$store.dispatch('deleteList', this.index)
-    }
+    deleteList() {
+      this.$store.dispatch("deleteList", this.index);
+    },
   },
 };
 </script>
@@ -114,6 +109,7 @@ export default {
   padding: 3%;
   margin-bottom: 5%;
   width: 45%;
+  position: relative;
   &--title {
     input {
       background: 0;

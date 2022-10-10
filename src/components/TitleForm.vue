@@ -1,6 +1,6 @@
 <template>
   <form
-    class="list-item--form form"
+    class="form form__title"
     action="#"
     @change="edit($event, value)"
     @submit="edit($event, value)"
@@ -8,7 +8,7 @@
     <input
       type="text"
       v-model="value"
-      :class="{ 'list-item--name': true }"
+      :class="{ 'input': true, error: error}"
     />
   </form>
 </template>
@@ -17,12 +17,10 @@
 import validate from "../assets/js/validate";
 
 export default {
-  mounted(){
-    
-  },
   data(){
     return {
-      value: this.target || 'nothing'
+      value: this.target,
+      error: false,
     }
   },
   props: ['target'],
@@ -33,7 +31,12 @@ export default {
           this.$emit('changeName', val)
         },
         () => {
-          this.$emit('delete')
+          this.$emit('delete');
+          this.error = true;
+          setTimeout(() => {
+            this.error = false;
+            this.value = 'defaul title'
+          }, 500)
         }
       );
     }
@@ -42,10 +45,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/scss/main.scss';
+
 .form {
-  border: 1px solid black;
-  input{
-  max-width: 100%;
+  overflow: hidden;
+  input {
+  // max-width: 100%;
+  }
+
+  .input {
+    display: inline;
+    background: none;
+    font-size: 20px;
+  }
+  .input.error{
+    background: red;
+    opacity: 0.6;
+    animation: error .2s ease-in-out 2;
+  }
+}
+
+.form.title {
+  input {
+    text-transform: uppercase;
+    text-decoration: underline;
+  }
+  margin-bottom: 5%;
+}
+
+@keyframes error {
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
   }
 }
 </style>

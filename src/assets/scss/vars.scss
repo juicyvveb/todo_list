@@ -15,8 +15,10 @@
 $blue: rgb(19, 73, 211);
 $red: rgb(249, 75, 66);
 $bg: rgb(66, 239, 66);
-$gray: rgb(144, 147, 144);
+$gray: rgba(171, 177, 171, 0.623);
 $green: rgb(30, 163, 30);
+
+
 *{
   list-style: none;
   text-align: left;
@@ -24,4 +26,6 @@ $green: rgb(30, 163, 30);
   padding: 0;
   line-height: 1;
   box-sizing: border-box;
+  outline: none;
+  border: none;
 }

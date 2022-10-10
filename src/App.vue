@@ -1,10 +1,10 @@
 <template>
   <main class="wrapper main">
-    <h1 class="title">Drag and Drop List</h1>
+    <h1 class="title">Drag and Drop list</h1>
     <TransitionGroup tag="ul" class="container" name="list">
       <List v-for="(elem, i) in list" :key="elem.id" :items="elem" :index="i" />
     </TransitionGroup>
-    <Button :classes="'main'" @addList="addList"/>
+    <Button :classes="'main'" @click="addList"/>
   </main>
   <footer></footer>
 
@@ -12,7 +12,7 @@
 
 <script>
 import List from "./components/List.vue";
-import Button from "./components/ButtonAdd.vue";
+import Button from "./components/Button.vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -35,7 +35,7 @@ export default {
     ...mapActions(["change"]),
     addList() {
       this.change({
-        arr: { title: "title", tasks: [{ name: "some name" }], id: `fd${++this.count}` },
+        arr: { tasks: [{}], id: `fd${++this.count}` },
         i: this.list.length,
       });
     },

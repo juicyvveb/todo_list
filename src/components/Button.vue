@@ -1,6 +1,6 @@
 <template>
   <div :class="['box', classes]">
-    <button type="button" class="btn btn__add" @click="initial()">
+    <button type="button" class="btn btn__add">
       <span></span>
     </button>
   </div>
@@ -10,11 +10,7 @@
 export default {
   props: ['classes'],
   methods: {
-    initial(){
-      this.$emit('addItem')
-      this.$emit('addList')
-      this.$emit('delItem')
-    }
+    
   },
 };
 </script>
@@ -56,8 +52,8 @@ export default {
   margin-top: 5%;
   width: 10%;
 }
-.box.inItem{
-  margin-top: 5%;
+
+.box.delete{
   width: 10%;
   position: absolute;
   top: 5%;

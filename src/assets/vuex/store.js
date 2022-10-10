@@ -20,20 +20,11 @@ const store = createStore({
   },
   getters: {
     list(st) {
-      // return st.list
-      //   .map(el => el.tasks)
-      //   .map((el, k) => el.map((el, i) => {
-      //     return {
-      //       name: el.name ? el.name.trim() : el.trim(),
-      //       id: `${k}_${i}`,
-      //       done: el.done || false
-      //     }
-      //   }))
       function createTasks(arr,i){
         return arr
         .map((el, k) => {
               return {
-                name: el.name ? el.name.trim() : el.trim(),
+                name: el.name ? el.name.trim() : 'example task',
                 id: `${i}_${k}`,
                 done: el.done || false
               }
@@ -43,7 +34,8 @@ const store = createStore({
       .map((el,i) => {
         return {
           title: el.title, 
-          tasks: createTasks(el.tasks, i)
+          tasks: createTasks(el.tasks, i),
+          id: el.id
         }
       });
     },

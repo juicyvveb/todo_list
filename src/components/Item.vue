@@ -1,13 +1,13 @@
 <template>
-  <div :class="{ 'list-item': true, done: element.done }" :key="element">
-    <Title :target="element.name" @changeName="changeName" @delete="delItem" />
-    <Button :classes="'inItem'" @delItem="delItem(element)" />
-    <Completed :target="element.done" @complete="complete" />
+  <div :class="{ 'list-item': true, done: el.done }" :key="el">
+    <Title :target="el.name" @changeName="changeName" @delete="delItem"></Title>
+    <Button :classes="'delete'" @click="delItem(el)" />
+    <Completed :target="el.done" @complete="complete" />
   </div>
 </template>
 
 <script>
-import Button from "./ButtonAdd.vue";
+import Button from "./Button.vue";
 import Title from "./TitleForm.vue";
 import Completed from "./CompleteForm.vue";
 
@@ -15,28 +15,12 @@ export default {
   props: ["el", "index"],
   data() {
     return {
-      title: this.el.name || "no title",
     };
   },
   components: {
     Button,
     Title,
     Completed,
-  },
-  computed: {
-    element() {
-      return this.el;
-    },
-    name: {
-      get() {
-        console.log("get");
-        return this.title;
-      },
-      set(val) {
-        console.log("set");
-        this.title = val;
-      },
-    },
   },
   methods: {
     changeName(val) {
@@ -45,9 +29,6 @@ export default {
     complete(val) {
       this.$emit("complete", { val, index: this.index });
     },
-    // editName(e, el) {
-    //   this.$emit("edit", e, el);
-    // },
     delItem(el) {
       this.$emit("del", el);
     },
