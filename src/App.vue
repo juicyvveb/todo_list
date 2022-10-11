@@ -1,6 +1,7 @@
 <template>
   <main class="wrapper main">
     <h1 class="title">Drag and Drop list</h1>
+    <p class="text">Можно обновить страницу, и список останется - информация сохранена в LocalStorage <span>&#x1f607;</span></p>
     <TransitionGroup tag="ul" class="container" name="list">
       <List v-for="(elem, i) in list" :key="elem.id" :items="elem" :index="i" />
     </TransitionGroup>
@@ -16,10 +17,10 @@ import Button from "./components/Button.vue";
 import { mapActions } from "vuex";
 
 export default {
-  data(){
-    return{
+  data() {
+    return {
       count: 1,
-    }
+    };
   },
   name: "App",
   components: {
@@ -39,7 +40,7 @@ export default {
         i: this.list.length,
       });
     },
-  }
+  },
 };
 </script>
 
@@ -57,26 +58,23 @@ export default {
 
 main {
   text-align: center;
+  .title {
+    text-align: center;
+  }
+  .text {
+    margin: 5% 0;
+  }
+  .title, .text{
+    font-family: 'Anton', sans-serif;
+  }
   .container {
+    margin-top: 5%;
     @include flexCenter;
     align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
   }
 }
-// .list-move,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5 ease-in-out;
-}
 
-.list-enter-from,
-.list-leave-to {
-  transform: scale(0.7) translateY(-40%);
-}
-
-.list-leave-active {
-  position: absolute;
-}
 </style>
 

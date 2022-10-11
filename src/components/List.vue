@@ -1,14 +1,14 @@
 <template>
   <div class="container-item">
-    <Title class="title" :target="title" @changeName="changeListTitle"/>
     <Button :classes="'delete'" @click="deleteList()" />
+    <Title class="title" :target="title" @changeName="changeListTitle"/>
     <draggable
       v-model="tasks"
       @start="drag = true"
       @end="drag = false"
       item-key="id"
       group="people"
-      class="list-group"
+      :class="{'list-group': true, 'list-group__district': tasks.length > 3}"
     >
       <template #item="{ element }">
         <Item
@@ -21,9 +21,10 @@
       </template>
 
       <template #footer>
-        <Button :classes="'inList'" @click="addItem()" />
       </template>
     </draggable>
+        <Button :classes="'inList'" @click="addItem()" />
+
   </div>
 </template>
 
@@ -33,7 +34,7 @@ import draggable from "vuedraggable";
 import { mapActions } from "vuex";
 import Button from "./Button.vue";
 import Title from "./TitleForm.vue";
-
+import {scrollTo} from '../assets/js/scrollTo';
 export default {
   props: ["index"],
   data() {
@@ -77,6 +78,7 @@ export default {
       val = "your task";
       const i = this.index;
       this.$store.dispatch("add", { val, i });
+      scrollTo('.list-group', this.index)
     },
     delItem(el) {
       this.tasks.splice(this.tasks.indexOf(el), 1);
@@ -106,35 +108,36 @@ export default {
 .container-item {
   border: 1px solid black;
   border-radius: 5px;
-  padding: 3%;
+  padding: 3% 2%;
   margin-bottom: 5%;
   width: 45%;
   position: relative;
-  &--title {
-    input {
-      background: 0;
-      border: none;
-      max-width: 100%;
-      outline: none;
-    }
+  .box.delete{
+    margin-left: auto;
   }
   .list-group {
     height: 100%;
+    ~ .box {
+      position: absolute;
+      bottom: 10px;
+    }
+    &__district{
+      max-height: 250px;
+      overflow-y: scroll;
+      ~ .box{
+      margin-bottom: 5%;
+      position: relative;
+      top: 0;
+      right: 0;
+      }
+    }
   }
+ 
 }
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0.5;
-  transform: scale(0.7);
-}
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 5s ease-in-out;
-}
 
-.list-move, /* apply transition to moving elements */
+// .list-move, /* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s ease;
@@ -143,12 +146,13 @@ export default {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(-30%);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving
    animations can be calculated correctly. */
-.list-leave-active {
-  position: absolute;
-}
+// .list-leave-active {
+//   // position: absolute;
+// }
+
 </style>

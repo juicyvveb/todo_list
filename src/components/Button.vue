@@ -55,9 +55,6 @@ export default {
 
 .box.delete{
   width: 10%;
-  position: absolute;
-  top: 5%;
-  right: 5%;
   .btn{
     span {
       transform: rotate(45deg);

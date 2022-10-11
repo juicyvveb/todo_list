@@ -1,6 +1,7 @@
 <template>
   <div :class="{ 'list-item': true, done: el.done }" :key="el">
-    <Title :target="el.name" @changeName="changeName" @delete="delItem"></Title>
+    <Title :target="el.name" @changeName="changeName" @delete="delItem">
+    </Title>
     <Button :classes="'delete'" @click="delItem(el)" />
     <Completed :target="el.done" @complete="complete" />
   </div>
@@ -38,26 +39,26 @@ export default {
 
 <style lang="scss" scoped>
 .list-item {
-  padding: 5% 3% 5% 0;
+  padding: 5% 3% 5% 3%;
   border: 1px solid black;
   margin-bottom: 5%;
   background: rgba(245, 77, 77, 0.774);
   position: relative;
-  &--name {
-    background: inherit;
-    border: none;
-    outline: none;
-    font-size: 20px;
-    max-width: 100%;
-    width: fit-content;
-    cursor: pointer;
-    &:focus {
-      font-size: 22px;
-    }
+  .delete, .box__complete {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+  .form {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .box__complete{
+    top: auto;
+    bottom: 7px;
   }
 }
 
-.list-item.done {
-  background: rgb(70, 214, 70);
-}
+
 </style>

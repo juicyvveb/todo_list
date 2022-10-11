@@ -11,6 +11,7 @@
   line-height: $line;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 $blue: rgb(19, 73, 211);
 $red: rgb(249, 75, 66);
@@ -18,6 +19,15 @@ $bg: rgb(66, 239, 66);
 $gray: rgba(171, 177, 171, 0.623);
 $green: rgb(30, 163, 30);
 
+.list-item.done {
+  background: rgb(70, 214, 70);
+  .form {
+    .input {
+      transition: all .5s ease-in-out;
+      text-decoration: line-through;
+    }
+  }
+}
 
 *{
   list-style: none;
@@ -28,4 +38,5 @@ $green: rgb(30, 163, 30);
   box-sizing: border-box;
   outline: none;
   border: none;
+  font-family: 'Pacifico', cursive;
 }

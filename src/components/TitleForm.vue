@@ -3,13 +3,16 @@
     class="form form__title"
     action="#"
     @change="edit($event, value)"
-    @submit="edit($event, value)"
+    @submit.prevent="edit($event, value)"
   >
     <input
       type="text"
       v-model="value"
       :class="{ 'input': true, error: error}"
     />
+    <span>
+      <slot></slot>
+    </span>
   </form>
 </template>
 
@@ -49,19 +52,21 @@ export default {
 
 .form {
   overflow: hidden;
-  input {
-  // max-width: 100%;
-  }
 
   .input {
     display: inline;
     background: none;
     font-size: 20px;
+    &:focus{
+        font-size: 23px;
+        font-family: "Arial";
+    }
   }
   .input.error{
     background: red;
+    border: 1px solid black;
     opacity: 0.6;
-    animation: error .2s ease-in-out 2;
+    animation: error .1s ease-in-out 2;
   }
 }
 
@@ -75,10 +80,10 @@ export default {
 
 @keyframes error {
   25% {
-    transform: translateX(-5px);
+    transform: translateY(-5px);
   }
   75% {
-    transform: translateX(5px);
+    transform: translateY(5px);
   }
 }
 </style>
