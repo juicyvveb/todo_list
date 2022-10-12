@@ -1,14 +1,15 @@
 <template>
   <div class="container-item">
     <Button :classes="'delete'" @click="deleteList()" />
-    <Title class="title" :target="title" @changeName="changeListTitle"/>
+    <Title class="title" :target="title" @changeName="changeListTitle" />
+    <h4 class="length">всего: {{ tasks.length }}</h4>
     <draggable
       v-model="tasks"
       @start="drag = true"
       @end="drag = false"
-      item-key="id"
+      :item-key="Date.now().toString()"
       group="people"
-      :class="{'list-group': true, 'list-group__district': tasks.length > 3}"
+      :class="{ 'list-group': true, 'list-group__district': tasks.length > 3 }"
     >
       <template #item="{ element }">
         <Item
@@ -17,14 +18,13 @@
           @edit="editName"
           @complete="complete"
           @del="delItem"
+          :class="tasks.length == 1 ? 'alone' : null"
         />
       </template>
 
-      <template #footer>
-      </template>
+      <template #footer> </template>
     </draggable>
-        <Button :classes="'inList'" @click="addItem()" />
-
+    <Button :classes="'inList'" @click="addItem()" />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ import draggable from "vuedraggable";
 import { mapActions } from "vuex";
 import Button from "./Button.vue";
 import Title from "./TitleForm.vue";
-import {scrollTo} from '../assets/js/scrollTo';
+import { scrollTo } from "../assets/js/scrollTo";
 export default {
   props: ["index"],
   data() {
@@ -74,11 +74,10 @@ export default {
   },
   methods: {
     ...mapActions(["change"]),
-    addItem(val) {
-      val = "your task";
+    addItem() {
       const i = this.index;
-      this.$store.dispatch("add", { val, i });
-      scrollTo('.list-group', this.index)
+      this.$store.dispatch("add", { val: "", i });
+      scrollTo(".list-group", this.index);
     },
     delItem(el) {
       this.tasks.splice(this.tasks.indexOf(el), 1);
@@ -112,41 +111,40 @@ export default {
   margin-bottom: 5%;
   width: 45%;
   position: relative;
-  .box.delete{
+  display: flex;
+  flex-direction: column;
+  background: rgba(160, 236, 241, 0.733);
+  .length {
+    margin-bottom: 3%;
+  }
+  .box.delete {
     margin-left: auto;
   }
   .list-group {
-    height: 100%;
-    ~ .box {
-      position: absolute;
-      bottom: 10px;
-    }
-    &__district{
-      max-height: 250px;
+    flex-grow: 2;
+    margin-bottom: 5%;
+    &__district {
+      max-height: 200px;
       overflow-y: scroll;
-      ~ .box{
-      margin-bottom: 5%;
-      position: relative;
-      top: 0;
-      right: 0;
+      ~ .box {
+        margin-top: auto;
       }
     }
   }
- 
 }
 
-
-
 // .list-move, /* apply transition to moving elements */
-.list-enter-active,
+.list-enter-active {
+  transition: all 0.5s ease-in-out;
+}
 .list-leave-active {
-  transition: all 0.5s ease;
+  transition: all 0.5s ease-in-out;
 }
 
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(-30%);
+  transform: translateX(-300px);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving
@@ -154,5 +152,4 @@ export default {
 // .list-leave-active {
 //   // position: absolute;
 // }
-
 </style>

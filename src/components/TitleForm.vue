@@ -6,9 +6,10 @@
     @submit.prevent="edit($event, value)"
   >
     <input
+      :id="value"
       type="text"
       v-model="value"
-      :class="{ 'input': true, error: error}"
+      :class="{ input: true, error: error }"
     />
     <span>
       <slot></slot>
@@ -20,53 +21,66 @@
 import validate from "../assets/js/validate";
 
 export default {
-  data(){
+  data() {
     return {
       value: this.target,
       error: false,
-    }
+    };
   },
-  props: ['target'],
+  props: ["target"],
   methods: {
-    edit(e, val){
-       return validate(e, val).then(
+    edit(e, val) {
+      return validate(e, val).then(
         () => {
-          this.$emit('changeName', val)
+          this.$emit("changeName",  val);
         },
         () => {
-          this.$emit('delete');
+          this.$emit("delete");
           this.error = true;
           setTimeout(() => {
             this.error = false;
-            this.value = 'defaul title'
-          }, 500)
+            this.value = "defaul title";
+          }, 500);
         }
       );
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/main.scss';
+@import "../assets/scss/main.scss";
 
 .form {
   overflow: hidden;
-
+  position: relative;
+  padding-left: 6%;
   .input {
     display: inline;
     background: none;
     font-size: 20px;
-    &:focus{
-        font-size: 23px;
-        font-family: "Arial";
+    &:focus {
+      font-size: 23px;
+      font-family: "Arial";
     }
   }
-  .input.error{
+  .input.error {
     background: red;
     border: 1px solid black;
     opacity: 0.6;
-    animation: error .1s ease-in-out 2;
+    animation: error 0.1s ease-in-out 2;
+  }
+  &:after {
+    content: "";
+    width: 5%;
+    aspect-ratio: 1/ 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(50%);
+    background-image: url("../assets/imgs/edit.png");
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 }
 

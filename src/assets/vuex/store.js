@@ -4,8 +4,9 @@ import {
 
 const store = createStore({
   state() {
+    const fromLocal = JSON.parse(localStorage.getItem('list'));
     return {
-      list: JSON.parse(localStorage.getItem('list')) || [{
+      list: fromLocal && fromLocal.length ? JSON.parse(localStorage.getItem('list')) : [{
           id: 'first',
           title: 'my title',
           tasks: ['to do smth', 'read smth', 'cook smth'],
@@ -23,9 +24,10 @@ const store = createStore({
       function createTasks(arr,i){
         return arr
         .map((el, k) => {
+          k,i
               return {
                 name: el.name ? el.name.trim() : 'example task',
-                id: `${i}_${k}`,
+                id: `${k}_${i}`,
                 done: el.done || false
               }
             })
@@ -33,7 +35,7 @@ const store = createStore({
       return st.list
       .map((el,i) => {
         return {
-          title: el.title, 
+          title: el.title.trim(), 
           tasks: createTasks(el.tasks, i),
           id: el.id
         }

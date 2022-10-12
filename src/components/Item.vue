@@ -1,8 +1,9 @@
 <template>
-  <div :class="{ 'list-item': true, done: el.done }" :key="el">
+  <div :class="{ 'list-item': true, done: el.done, 'leave': isLeaving }" :key="el">
+    <h4 class="index">{{ index + 1}}</h4>
+    <Button :classes="'delete'" @click="delItem(el)" />
     <Title :target="el.name" @changeName="changeName" @delete="delItem">
     </Title>
-    <Button :classes="'delete'" @click="delItem(el)" />
     <Completed :target="el.done" @complete="complete" />
   </div>
 </template>
@@ -16,6 +17,7 @@ export default {
   props: ["el", "index"],
   data() {
     return {
+      isLeaving: false,
     };
   },
   components: {
@@ -31,7 +33,11 @@ export default {
       this.$emit("complete", { val, index: this.index });
     },
     delItem(el) {
-      this.$emit("del", el);
+      this.isLeaving = true;
+      setTimeout(() => {
+        this.$emit("del", el);
+        this.isLeaving = false
+      }, 300)    
     },
   },
 };
@@ -44,21 +50,35 @@ export default {
   margin-bottom: 5%;
   background: rgba(245, 77, 77, 0.774);
   position: relative;
-  .delete, .box__complete {
-    position: absolute;
-    top: 7px;
-    right: 7px;
+  .index {
+    display: inline;
+  }
+  .delete,
+  .box__complete {
+    margin-left: auto;
+  }
+  .delete {
+    float: right;
   }
   .form {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-  .box__complete{
-    top: auto;
-    bottom: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 }
 
+.list-item.leave {
+  animation: leave 1s ease;
+}
+
+
+.list-item.alone{
+ animation: none;
+}
+
+@keyframes leave {
+  to{
+    transform: translateX(300px);
+  }
+}
 
 </style>
