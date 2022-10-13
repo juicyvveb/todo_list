@@ -35,7 +35,7 @@ const store = createStore({
       return st.list
       .map((el,i) => {
         return {
-          title: el.title.trim(), 
+          title: el.title? el.title.trim() : 'default list', 
           tasks: createTasks(el.tasks, i),
           id: el.id
         }

@@ -1,6 +1,9 @@
 <template>
-  <div :class="{ 'list-item': true, done: el.done, 'leave': isLeaving }" :key="el">
-    <h4 class="index">{{ index + 1}}</h4>
+  <div
+    :class="{ 'list-item': true, done: el.done, leave: isLeaving }"
+    :key="el"
+  >
+    <h4 class="index">{{ index + 1 }}</h4>
     <Button :classes="'delete'" @click="delItem(el)" />
     <Title :target="el.name" @changeName="changeName" @delete="delItem">
     </Title>
@@ -36,14 +39,15 @@ export default {
       this.isLeaving = true;
       setTimeout(() => {
         this.$emit("del", el);
-        this.isLeaving = false
-      }, 300)    
+        this.isLeaving = false;
+      }, 300);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/scss/main.scss';
 .list-item {
   padding: 5% 3% 5% 3%;
   border: 1px solid black;
@@ -70,15 +74,20 @@ export default {
   animation: leave 1s ease;
 }
 
-
-.list-item.alone{
- animation: none;
+.list-item.alone {
+  animation: none;
 }
 
+
 @keyframes leave {
-  to{
+  to {
     transform: translateX(300px);
   }
 }
 
+@media (min-width: $desktop) {
+  .list-item{
+    padding: 3% 1% 3% 1%;
+  }
+}
 </style>

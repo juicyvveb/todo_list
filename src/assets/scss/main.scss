@@ -2,7 +2,18 @@
 @import './fonts.scss';
 
 .wrapper{
-  padding: 3%
+  padding: 0 3%
 }
 
+@media (min-width: $laptop) {
+  .wrapper{
+    padding: 0% 7%
+  }
+}
+@media (min-width: $desktop) {
+  .wrapper{
+    padding: 0% 15%;
+  }
+  
+}
 

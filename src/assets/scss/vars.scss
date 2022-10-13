@@ -13,12 +13,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-$blue: rgb(19, 73, 211);
+$blue: rgb(173, 190, 189);
 $red: rgb(249, 75, 66);
 $bg: rgb(66, 239, 66);
 $gray: rgba(171, 177, 171, 0.623);
 $green: rgb(30, 163, 30);
 
+
+$laptop: 720px;
+$desktop: 1024px;
 .list-item.done {
   background: rgb(70, 214, 70);
   .form {

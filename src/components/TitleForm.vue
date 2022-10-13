@@ -1,7 +1,6 @@
 <template>
   <form
     class="form form__title"
-    action="#"
     @change="edit($event, value)"
     @submit.prevent="edit($event, value)"
   >
@@ -21,13 +20,13 @@
 import validate from "../assets/js/validate";
 
 export default {
+  props: ["target"],
   data() {
     return {
       value: this.target,
       error: false,
     };
   },
-  props: ["target"],
   methods: {
     edit(e, val) {
       return validate(e, val).then(
@@ -39,7 +38,7 @@ export default {
           this.error = true;
           setTimeout(() => {
             this.error = false;
-            this.value = "defaul title";
+            this.value = "default title";
           }, 500);
         }
       );
@@ -84,12 +83,10 @@ export default {
   }
 }
 
-.form.title {
+.title {
   input {
     text-transform: uppercase;
-    text-decoration: underline;
   }
-  margin-bottom: 5%;
 }
 
 @keyframes error {

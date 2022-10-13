@@ -1,7 +1,12 @@
 <template>
   <div class="container-item">
+    <!-- кнопка удаления списка -->
     <Button :classes="'delete'" @click="deleteList()" />
+
+    <!-- редактируемый заголовок списка -->
     <Title class="title" :target="title" @changeName="changeListTitle" />
+
+    <!-- тело списка-drag&drop -->
     <h4 class="length">всего: {{ tasks.length }}</h4>
     <draggable
       v-model="tasks"
@@ -24,7 +29,10 @@
 
       <template #footer> </template>
     </draggable>
-    <Button :classes="'inList'" @click="addItem()" />
+
+
+    <!-- кнопка добавления элемента -->
+    <Button class="btn__addItem" @click="addItem()" />
   </div>
 </template>
 
@@ -64,7 +72,7 @@ export default {
     },
     title: {
       get() {
-        return this.myArray.title || "default title";
+        return this.myArray.title;
       },
       set(val) {
         this.myArray.title = val;
@@ -108,17 +116,25 @@ export default {
   border: 1px solid black;
   border-radius: 5px;
   padding: 3% 2%;
-  margin-bottom: 5%;
-  width: 45%;
+  margin-bottom: 4%;
+  margin-right: 4%;
+  width: 48%;
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgba(160, 236, 241, 0.733);
+  background: $blue;
+  &:nth-child(2n) {
+    margin-right: 0;
+  }
   .length {
     margin-bottom: 3%;
   }
   .box.delete {
     margin-left: auto;
+  }
+  .btn__addItem {
+    margin-top: 5%;
+    width: 10%;
   }
   .list-group {
     flex-grow: 2;
@@ -133,12 +149,50 @@ export default {
   }
 }
 
+.linka {
+  width: 10%;
+  height: 10%;
+}
+
+@media (min-width: $laptop) {
+  .container-item {
+    width: 30%;
+    margin-right: 5%;
+    &:nth-child(2n) {
+      margin-right: 5%;
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+}
+@media (min-width: $desktop) {
+  .container-item {
+    width: 15%;
+    padding: 2% 1%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    .btn__addItem {
+      width: 15%;
+    }
+    &:nth-child(2n) {
+      margin-right: 2%;
+    }
+    &:nth-child(3n) {
+      margin-right: 2%;
+    }
+  }
+}
+
 // .list-move, /* apply transition to moving elements */
 .list-enter-active {
   transition: all 0.5s ease-in-out;
 }
 .list-leave-active {
   transition: all 0.5s ease-in-out;
+  .list-item {
+    display: none;
+  }
 }
 
 .list-enter-from,
@@ -146,10 +200,4 @@ export default {
   opacity: 0;
   transform: translateX(-300px);
 }
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
-// .list-leave-active {
-//   // position: absolute;
-// }
 </style>

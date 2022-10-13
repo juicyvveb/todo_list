@@ -22,18 +22,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/scss/main.scss";
 .box {
   width: 10%;
   display: flex;
   border-radius: 20%;
-  border: 1px solid black;
   aspect-ratio: 1 / 1;
   position: relative;
+  &:hover{
+    padding: 3px;
+    padding-bottom: 0;
+  }
   .input {
     width: 100%;
+    border: 3px solid black;
+    cursor: pointer;
   }
-  &:before{
-    content: 'completed';
+  &:before {
+    content: "completed";
     position: absolute;
     left: 0%;
     bottom: 0;
@@ -41,6 +47,13 @@ export default {
     transform: translateX(-110%);
     font-style: italic;
     color: rgb(22, 27, 110);
+    pointer-events: none;
+  }
+}
+
+@media (min-width: $desktop) {
+  .box {
+    width: 15%;
   }
 }
 </style>
