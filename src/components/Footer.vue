@@ -18,19 +18,19 @@ export default {
       contacts: [
         {
           title: 'vk',
-          addres: 'https://vk.com/'
+          addres: 'https://vk.com/id139577018'
         },
         {
           title: 'inst',
-          addres: 'https://www.instagram.com/'
+          addres: 'https://instagram.com/el_nazira_'
         },
         {
           title: 'link',
-          addres: 'https://ru.linkedin.com/'
+          addres: 'https://www.linkedin.com/in/nazar-zenkov-851b15248/'
         },
         {
           title: 'tg',
-          addres: 'https://web.telegram.org/k/'
+          addres: 'https://t.me/nazzarra'
         },
       ]
     };
